@@ -2,7 +2,7 @@ import random
 import sys #annoying to press q all the time
 import time
 
-debug = False
+debug = True
 
 def main():
     deck = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -21,6 +21,7 @@ def main():
         print("Type [H] to hit, [S] to stay, and [Q] to quit: ")
         player_input = input()
         player_input = player_input.lower()
+        print()
 
         #player's turn
         if player_input == "h":
@@ -31,6 +32,8 @@ def main():
             sys.exit()
         
         if calculate_score(player_deck) > 21:
+            print_status(player_deck, dealer_deck)
+            
             print("Calculating...")
             time.sleep(2)
 
