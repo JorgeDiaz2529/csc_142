@@ -44,6 +44,10 @@ def draw_text(surface, text, x, y, color, font_size=24):
 
     return text_rect
 
+def move_ball(ballRect):
+    ballRect.left = random.randrange(MAX_WIDTH)
+    ballRect.top = random.randrange(MAX_HEIGHT)
+
 # 6 - Loop forever
 while True:
 
@@ -57,11 +61,8 @@ while True:
         if event.type == MOUSEBUTTONDOWN:
             # mouse input
             if ballRect.collidepoint(event.pos):
+                move_ball(ballRect)
                 playerScore += 1
-
-    if playerScore >= 5:
-        print(pygame.time.get_ticks())
-        break
     
     # 8 - Do any "per frame" actions
     if (ballRect.left < 0) or (ballRect.right >= WINDOW_WIDTH):
@@ -80,8 +81,12 @@ while True:
     window.fill(BLACK)
     
     # 10 - Draw the window elements
-    window.blit(ballImage, ballRect)
-    scoreText = draw_text(window, f"Score: {playerScore}", window.get_rect().left + 6, window.get_rect().top + 6,
+    if playerScore >= 5:
+        winText = draw_text(window, "Wow! You did it!", window.get_rect().centerx/2, window.get_rect().centery, 
+                        (255, 255, 255), 48)
+    else:
+        window.blit(ballImage, ballRect)
+        scoreText = draw_text(window, f"Score: {playerScore}", window.get_rect().left + 6, window.get_rect().top + 6,
                           (255,255,255), 24)
 
     # 11 - Update the window
